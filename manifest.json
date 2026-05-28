@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Mindful Browser",
+  "version": "1.0",
+  "description": "Blokuje pożeracze czasu, prosi o głęboki oddech i śledzi czas sesji.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation",
+    "notifications",
+    "alarms"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_title": "Ustawienia Mindful Browser"
+  }
+}
