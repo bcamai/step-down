@@ -8,13 +8,18 @@
     "tabs",
     "webNavigation",
     "notifications",
-    "alarms"
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "background": {
     "scripts": ["background.js"]
   },
   "action": {
-    "default_title": "Ustawienia Mindful Browser"
+    "default_title": "Ustawienia Mindful Browser",
+    "default_popup": "popup.html"
   },
   "options_ui": {
     "page": "options.html",
