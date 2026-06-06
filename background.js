@@ -1,4 +1,24 @@
-const blockedSites = ["facebook.com", "instagram.com", "reddit.com"];
+let blockedSites = ["facebook.com", "instagram.com", "reddit.com"];
+let waitTime = 10;
+
+browser.storage.local.get({
+    blockedSites: ["facebook.com", "instagram.com", "reddit.com"],
+    waitTime: 10
+}).then(res => {
+    blockedSites = res.blockedSites;
+    waitTime = res.waitTime;
+});
+
+browser.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local') {
+        if (changes.blockedSites) {
+            blockedSites = changes.blockedSites.newValue;
+        }
+        if (changes.waitTime) {
+            waitTime = changes.waitTime.newValue;
+        }
+    }
+});
 
 let activeTabInfo = { id: null, domain: null, startTime: null };
 

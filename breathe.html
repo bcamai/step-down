@@ -4,21 +4,112 @@
     <meta charset="UTF-8">
     <title>Zatrzymaj się</title>
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #2c3e50; color: white; }
-        .circle { width: 150px; height: 150px; border-radius: 50%; background-color: #3498db; animation: breathe 8s infinite ease-in-out; }
-        @keyframes breathe {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); }
-            100% { transform: scale(1); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; 
+            height: 100vh; margin: 0; 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: #ecf0f1; overflow: hidden;
+            padding: 40px 20px;
+            box-sizing: border-box;
         }
-        button { margin-top: 30px; padding: 10px 20px; font-size: 16px; display: none; }
+        
+        /* Tło z jakimiś kształtami żeby szkło miało co załamywać */
+        .bg-shape1 {
+            position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: rgba(52, 152, 219, 0.4); border-radius: 50%; filter: blur(80px); z-index: -1;
+        }
+        .bg-shape2 {
+            position: absolute; bottom: -10%; right: -10%; width: 40vw; height: 40vw;
+            background: rgba(155, 89, 182, 0.4); border-radius: 50%; filter: blur(80px); z-index: -1;
+        }
+
+        h1 { 
+            font-size: 2.5rem; font-weight: 300; margin: 0; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2); text-align: center;
+        }
+
+        .circle-container { 
+            position: relative; display: flex; justify-content: center; align-items: center; 
+            margin: 40px 0; z-index: 10;
+        }
+
+        /* Liquid Glass effect */
+        .circle { 
+            width: 200px; height: 200px; border-radius: 50%; 
+            
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.3);
+            
+            animation: breathe 8s infinite ease-in-out; 
+            position: relative;
+        }
+        
+        /* Odbicie światła na szkle */
+        .circle::before {
+            content: '';
+            position: absolute;
+            top: 15%; left: 15%; width: 30%; height: 30%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            transform: rotate(-45deg);
+        }
+
+        .circle-text { 
+            position: absolute; font-size: 1.2rem; font-weight: 500; opacity: 0.9; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 20; pointer-events: none;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(0.8); }
+        }
+
+        .bottom-section {
+            display: flex; flex-direction: column; align-items: center; min-height: 100px; justify-content: center; z-index: 20;
+        }
+
+        #timer-container {
+            font-size: 1.5rem; font-weight: 300; 
+            background: rgba(255,255,255,0.1); padding: 12px 35px; 
+            border-radius: 30px; backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        button { 
+            padding: 14px 32px; font-size: 1.1rem; display: none; cursor: pointer;
+            background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.8); 
+            border-radius: 30px; transition: all 0.3s ease; text-transform: uppercase; 
+            font-weight: 600; letter-spacing: 1px; backdrop-filter: blur(5px);
+        }
+
+        button:hover { 
+            background: white; color: #2a5298; border-color: white; 
+            transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        }
     </style>
 </head>
 <body>
+    <div class="bg-shape1"></div>
+    <div class="bg-shape2"></div>
+
     <h1>Zatrzymaj się i weź głęboki oddech...</h1>
-    <div class="circle"></div>
-    <p id="timer">Poczekaj 5 sekund...</p>
-    <button id="continueBtn">Chcę wejść na stronę</button>
+    
+    <div class="circle-container">
+        <div class="circle"></div>
+        <div class="circle-text">Wdech... Wydech...</div>
+    </div>
+    
+    <div class="bottom-section">
+        <div id="timer-container">Poczekaj <span id="time-left">...</span> sekund</div>
+        <button id="continueBtn">Chcę wejść na stronę</button>
+    </div>
 
     <script src="breathe.js"></script>
 </body>
